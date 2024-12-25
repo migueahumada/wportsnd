@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.30)
 project(AudioPortLibsnd LANGUAGES CXX C)
 set(CMAKE_CXX_STANDARD 20)
-
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 # Fetch PortAudio
@@ -36,6 +35,11 @@ FetchContent_MakeAvailable(wxWidgets)
 
 # Add the main executable
 add_executable(main Project/main.cpp)
+
+# Set subsystem to Windows for GUI applications
+if(WIN32)
+    set_target_properties(main PROPERTIES WIN32_EXECUTABLE ON)
+endif()
 
 # Link libraries
 target_link_libraries(main PRIVATE portaudio sndfile wx::net wx::core wx::base)
